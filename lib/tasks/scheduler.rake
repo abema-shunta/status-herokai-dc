@@ -12,13 +12,15 @@ task :update_status_from_heroku_devcenter => :environment do
 
   puts "Updating status..."
 
-  puts "List articles from Learning (https://devcenter.heroku.com/categories/learning)"
+  puts "List articles (#{HEROKU_ARTICLES_URL})"
   page = 1
   has_next = true
 
+  articles = []
+
   while has_next
     puts "page #{page}"
-    _articles = Nokogiri::HTML(open("#{HEROKU_ARTICLES_URL}/learning?page=#{page}"))
+    _articles = Nokogiri::HTML(open("#{HEROKU_ARTICLES_URL}?page=#{page}"))
     list = _articles.css("ul.long-doc-listing li a")
     if list.size > 0
       list.each do |name|
@@ -37,7 +39,7 @@ task :update_status_from_heroku_devcenter => :environment do
     ### Add name and updated_at
     _html = Nokogiri::HTML(open("#{HEROKU_ARTICLES_URL}/#{article[:url]}"))
     article[:name] = _html.css("header h1").first.content 
-    article[:updated_at] = Date.parse(_html.css("p.meta").first.content.split(":").last)
+    article[:written_at] = Date.parse(_html.css("p.meta").first.content.split(":").last)
     if active_list = _html.css("li.section li.active a").first
       article[:tag] = active_list.content
     end
@@ -46,21 +48,34 @@ task :update_status_from_heroku_devcenter => :environment do
 
   end
   
+  articles.each do |article|
+  
+    a = Article.find_or_create_by url: article[:url]
+    a.update_attributes article
+  
+  end
+  
+  Rake::Task["update_status_from_github_wiki"].invoke
+  
 end 
 
+desc "This task is called by the Heroku scheduler add-on"
 task :update_status_from_github_wiki => :environment do 
 
-  articles.map! do |article|
-    _html = Nokogiri::HTML(open("#{HEROKAI_WIKI_URL}/#{article["url"]}"))
-    puts "#{HEROKAI_WIKI_URL}/#{article["url"]}"
-    puts _html.css("#head h1").first.content
+  puts "List articles from Learning (#{HEROKAI_WIKI_URL})"
+
+  articles = Article.all
+  articles.each do |article|
+
+    _html = Nokogiri::HTML(open("#{HEROKAI_WIKI_URL}/#{article[:url]}"))
+    puts "#{HEROKAI_WIKI_URL}/#{article[:url]}"
     if _html.css("#head h1").first.content == "Home" # appearing editor for creating new article
-      article["translated_at"] = nil
+      article[:translated_at] = nil
     else
-      article["translated_at"] = Date.parse(_html.css("#last-edit time").first['title'])
+      article[:translated_at] = Date.parse(_html.css("#last-edit time").first['title'])
     end
-    puts article
-    article
+    article.save
+
   end
 
 end

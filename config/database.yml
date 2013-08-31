@@ -19,7 +19,7 @@ development:
   encoding: unicode
   database: status-herokai-dc_development
   pool: 5
-  username: status-herokai-dc
+  username:
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -48,7 +48,7 @@ test:
   encoding: unicode
   database: status-herokai-dc_test
   pool: 5
-  username: status-herokai-dc
+  username:
   password:
 
 production:

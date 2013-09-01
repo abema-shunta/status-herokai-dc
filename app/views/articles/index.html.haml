@@ -1,8 +1,23 @@
 %nav{:class => "navbar navbar-inverse navbar-fixed-top"}
-  %a.navbar-brand{:href => "#"} Status Herokai DevCenter
+  %a.navbar-brand{:href => "#"} Status HerokaiJP DevCenter
   .navbar-form.pull-right
     .form-group
       %input#filter{:type => "text", :class => "form-control", :placeholder => "Search"}
+
+.jumbotron
+  .container
+    %h1 Status HerokaiJP Devcenter
+    :ruby 
+      pages = @articles.size
+      translated_pages = @articles.select{|a| a[:translated_at] != nil}.size
+      score = translated_pages * 100 / pages
+    %p
+      There are #{pages} pages, and #{translated_pages} is translated. #{score}% translated.
+      
+    .progress.progress-striped.active
+      .progress-bar{:role=>"progressbar", "aria-valuenow" => score, "aria-valuemin" => "0", "aria-valuemax" => "100", :style => "width: #{score}%"}
+        %span.sr-only #{score}% Complete
+
 %table#data.table.table-striped
   %thead
     %tr

@@ -2,8 +2,8 @@
   %a.navbar-brand{:href => "#"} Status Herokai DevCenter
   .navbar-form.pull-right
     .form-group
-      %input{:type => "text", :class => "form-control", :placeholder => "Search"}
-%table.table.table-striped
+      %input#filter{:type => "text", :class => "form-control", :placeholder => "Search"}
+%table#data.table.table-striped
   %thead
     %tr
       %th Name
@@ -28,7 +28,8 @@
         else
         s = "danger"
         end
-      %tr{:class => s}
+      %tr{:class => [s,"data"], :id => article[:name]}
+        %td{:style => "display: none"}= article[:name]
         %td
           = link_to article[:name], "https://devcenter.heroku.com/articles/#{article[:url]}", :class => "text-info"
           %span.text-muted
@@ -45,3 +46,20 @@
           %span{:class => "glyphicon glyphicon-#{sign[s]} text-#{s}"}
         %td= link_to "", "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["glyphicon", "glyphicon-pencil"]
         %td= link_to "", "https://devcenter.heroku.com/articles/#{article[:url]}", :class => ["glyphicon", "glyphicon-new-window"]
+
+:javascript
+  $("#filter").on("keyup",function(){
+    console.log($(this).val());
+    var keyword = $(this).val();
+    if(keyword.length > 0){
+      $("table tr.data").each(function(){
+        if($(this).attr("id").toLowerCase().indexOf(keyword.toLowerCase()) != -1){
+          $(this).show();
+        } else {
+          $(this).hide();
+        }
+      });
+    }else{
+      $("table tr").show();
+    }
+  })

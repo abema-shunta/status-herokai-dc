@@ -1,0 +1,40 @@
+%h1 Herokai DevCenter
+%p.text-muted Translation Project of documents on Heroku Dev Center
+%table.table.table-striped
+  %thead
+    %tr
+      %th Name
+      %th Updated at
+      %th Translated at
+      %th Status
+      %th
+      %th
+  %tbody
+    - words = {"success" => "OK", "warning" => "Out-of-date", "danger" => "Untranslated" }
+    - @articles.each do |article|
+      :ruby
+        updated_at = Date.parse(article[:written_at].to_s)
+        translated_at = Date.parse(article[:translated_at].to_s) if article[:translated_at]
+        if translated_at
+        if updated_at < translated_at
+        s = "success"
+        else
+        s = "warning"
+        end
+        else
+        s = "danger"
+        end
+      %tr{:class => s}
+        %td
+          = article[:name]
+          %span.text-muted
+            (#{article["url"]})
+        %td= article[:updated_at]
+        %td= article[:translated_at]
+        %td
+          %span{:class => "text-#{s}"}
+            = words[s]
+        %td
+          %a{:href => "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}"} WIKI
+        %td
+          %a{:href => "https://devcenter.heroku.com/articles/#{article[:url]}"} ORIGINAL

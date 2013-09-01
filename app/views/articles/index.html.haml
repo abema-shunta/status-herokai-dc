@@ -34,7 +34,5 @@
         %td
           %span{:class => "text-#{s}"}
             = words[s]
-        %td
-          %a{:href => "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}"} WIKI
-        %td
-          %a{:href => "https://devcenter.heroku.com/articles/#{article[:url]}"} ORIGINAL
+        %td= link_to "", "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["glyphicon", "glyphicon-pencil"]
+        %td= link_to "", "https://devcenter.heroku.com/articles/#{article[:url]}", :class => ["glyphicon", "glyphicon-new-window"]

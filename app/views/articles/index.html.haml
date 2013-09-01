@@ -29,8 +29,8 @@
           = article[:name]
           %span.text-muted
             (#{article["url"]})
-        %td= article[:updated_at].strftime "%y/%m/%d"
-        %td= article[:translated_at].strftime "%y/%m/%d"
+        %td= article[:updated_at].strftime "%y/%m/%d" if article[:updated_at]
+        %td= article[:translated_at].strftime "%y/%m/%d" if article[:translated_at]
         %td
           %span{:class => "text-#{s}"}
             = words[s]

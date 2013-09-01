@@ -1,16 +1,20 @@
-%h1 Herokai DevCenter
-%p.text-muted Translation Project of documents on Heroku Dev Center
+%nav{:class => "navbar navbar-inverse navbar-fixed-top"}
+  %a.navbar-brand{:href => "#"} Status Herokai DevCenter
+  .navbar-form.pull-right
+    .form-group
+      %input{:type => "text", :class => "form-control", :placeholder => "Search"}
 %table.table.table-striped
   %thead
     %tr
       %th Name
-      %th Updated at
-      %th Translated at
-      %th Status
+      %th Updated
+      %th Translated
+      %th 
       %th
       %th
   %tbody
     - words = {"success" => "OK", "warning" => "Out-of-date", "danger" => "Untranslated" }
+    - sign = {"success" => "ok", "warning" => "warning-sign", "danger" => "minus-sign"}
     - @articles.each do |article|
       :ruby
         updated_at = Date.parse(article[:written_at].to_s)
@@ -26,13 +30,18 @@
         end
       %tr{:class => s}
         %td
-          = article[:name]
+          = link_to article[:name], "https://devcenter.heroku.com/articles/#{article[:url]}", :class => "text-info"
           %span.text-muted
             (#{article["url"]})
-        %td= article[:updated_at].strftime "%y/%m/%d" if article[:updated_at]
-        %td= article[:translated_at].strftime "%y/%m/%d" if article[:translated_at]
+          - if article[:translated_at]
+            = link_to "Japanese", "https://devcenter.heroku.com/articles/#{article[:url]}", :class => ["btn", "btn-default", "btn-xs"]
+        %td= article[:written_at].strftime "%y/%m/%d" if article[:written_at]
         %td
-          %span{:class => "text-#{s}"}
-            = words[s]
+          - unless article[:translated_at]
+            Not yet
+          - else        
+            =article[:translated_at].strftime "%y/%m/%d"
+        %td
+          %span{:class => "glyphicon glyphicon-#{sign[s]} text-#{s}"}
         %td= link_to "", "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["glyphicon", "glyphicon-pencil"]
         %td= link_to "", "https://devcenter.heroku.com/articles/#{article[:url]}", :class => ["glyphicon", "glyphicon-new-window"]

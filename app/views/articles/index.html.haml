@@ -50,7 +50,7 @@
           %span.text-muted
             (#{article["url"]})
           - if article[:translated_at]
-            = link_to "Japanese", "https://devcenter.heroku.com/articles/#{article[:url]}", :class => ["btn", "btn-default", "btn-xs"]
+            = link_to "Japanese", "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["btn", "btn-default", "btn-xs"]
         %td= article[:written_at].strftime "%y/%m/%d" if article[:written_at]
         %td
           - unless article[:translated_at]

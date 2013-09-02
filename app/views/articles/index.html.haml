@@ -59,12 +59,12 @@
             Not yet
           - else        
             =article[:translated_at].strftime "%y/%m/%d"
-        %td= link_to "", compare_path(:url => article[:url]), :class => ["glyphicon", "glyphicon-eye-open"], :remote => true
+        %td= link_to "", compare_path(:url => article[:url]), :class => ["glyphicon", "glyphicon-eye-open", "compare"], :remote => true
         %td
-          %span{:class => "glyphicon glyphicon-#{sign[s]} text-#{s}"}
-        %td= link_to "", "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["glyphicon", "glyphicon-pencil"]
-        %td= link_to "", "https://devcenter.heroku.com/articles/#{article[:url]}", :class => ["glyphicon", "glyphicon-new-window"]
-        %td= link_to "", "https://twitter.com/share?text=#{tweet_text(article)}", :class => ["glyphicon", "glyphicon-bullhorn"], :target => "_blank"
+          %span{:class => "glyphicon glyphicon-#{sign[s]} text-#{s} stat-#{s}"}
+        %td= link_to "", "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["glyphicon", "glyphicon-pencil", "wikilink"]
+        %td= link_to "", "https://devcenter.heroku.com/articles/#{article[:url]}", :class => ["glyphicon", "glyphicon-new-window", "doclink"]
+        %td= link_to "", "https://twitter.com/share?text=#{tweet_text(article)}", :class => ["glyphicon", "glyphicon-bullhorn", "announce"], :target => "_blank"
 
 #Modal.modal.fade{:tabindex => "-1", :role => "dialog", "aria-labellebdy" => "myModalLabel", "aria-hidden" => "true"}
   .modal-dialog
@@ -79,6 +79,34 @@
             %td#wiki
 
 :javascript
+  $('.wikilink').tooltip({
+    title: "Watch the translated article",
+    trigger: "hover"
+  });
+  $('.doclink').tooltip({
+    title: "Watch the original article",
+    trigger: "hover"
+  });
+  $('.announce').tooltip({
+    title: "Announce this article via Twitter",
+    trigger: "hover"
+  });
+  $('.stat-success').tooltip({
+    title: "Translated after this article updated",
+    trigger: "hover"
+  });
+  $('.stat-warning').tooltip({
+    title: "This article might be out-of-date",
+    trigger: "hover"
+  });
+  $('.stat-danger').tooltip({
+    title: "Untranslated",
+    trigger: "hover"
+  });
+  $('.compare').tooltip({
+    title: "Compare the translated with the original",
+    trigger: "hover"
+  });
   $("#filter").on("keyup",function(){
     console.log($(this).val());
     var keyword = $(this).val();

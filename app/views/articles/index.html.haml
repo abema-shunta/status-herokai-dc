@@ -27,6 +27,7 @@
       %th 
       %th
       %th
+      %th
   %tbody
     - words = {"success" => "OK", "warning" => "Out-of-date", "danger" => "Untranslated" }
     - sign = {"success" => "ok", "warning" => "warning-sign", "danger" => "minus-sign"}
@@ -61,6 +62,7 @@
           %span{:class => "glyphicon glyphicon-#{sign[s]} text-#{s}"}
         %td= link_to "", "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["glyphicon", "glyphicon-pencil"]
         %td= link_to "", "https://devcenter.heroku.com/articles/#{article[:url]}", :class => ["glyphicon", "glyphicon-new-window"]
+        %td= link_to "", "https://twitter.com/share?text=#{tweet_text(article)}", :class => ["glyphicon", "glyphicon-bullhorn"], :target => "_blank"
 
 :javascript
   $("#filter").on("keyup",function(){

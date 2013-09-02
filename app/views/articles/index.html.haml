@@ -12,7 +12,7 @@
       translated_pages = @articles.select{|a| a[:translated_at] != nil}.size
       score = translated_pages * 100 / pages
     %p
-      There are #{pages} pages, and #{translated_pages} is translated. #{score}% translated.
+      There are #{pages} pages, and #{translated_pages} pages are translated. #{score}% translated.
       
     .progress.progress-striped.active
       .progress-bar{:role=>"progressbar", "aria-valuenow" => score, "aria-valuemin" => "0", "aria-valuemax" => "100", :style => "width: #{score}%"}

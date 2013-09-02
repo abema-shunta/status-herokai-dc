@@ -11,7 +11,6 @@ class ArticlesController < ApplicationController
     require 'rubygems'
     require 'nokogiri'
     require 'open-uri'
-    @article = Article.find_by(:url => params[:url] )
     _doc = Nokogiri::HTML(open("https://devcenter.heroku.com/articles/#{params[:url]}"))
     @doc = _doc.css(".padder").first.to_s
     _wiki = Nokogiri::HTML(open("https://github.com/herokaijp/devcenter/wiki/#{params[:url]}"))

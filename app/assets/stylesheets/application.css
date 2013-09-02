@@ -18,10 +18,24 @@ body{
 .modal-dialog {
   width: auto;
 }
+#Articles td img{
+  width: 100%;
+}
 #Articles td{
   width: 50%;
   vertical-align: top;
 }
+#Articles{
+  width: 100%;
+}
+#Articles .indicator{
+  width: 100px;
+  height: 100px;
+  margin: auto;
+  display: block;
+}
+
 .center{
   text-align: center;
+  display: block;
 }

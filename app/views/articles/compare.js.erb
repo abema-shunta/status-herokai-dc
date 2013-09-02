@@ -1,15 +1,15 @@
 try{
 <% if @wiki %>
-$("<%= raw turn_into_single_line(@wiki) %>").appendTo("#wiki");
+$("#wiki").html($("<%= raw turn_into_single_line(@wiki) %>"));
+<% else %>
+$("#wiki").html($("<span class='text-muted center'>This article is not translated yet.</span>"));
 <% end %>
 var doc = $("<%= raw turn_into_single_line(@doc) %>")
 doc.find("section.article-feedback").remove();
 doc.find("#table-of-contents").remove();
 doc.find(".tags").remove();
 doc.find(".meta").remove();
-doc.appendTo("#doc");
-$("#Modal h4").text("<%= @article[:name] %>");
-$('#Modal').modal('show');
+$("#doc").html(doc);
 }catch(e){
   alert(e);
 }

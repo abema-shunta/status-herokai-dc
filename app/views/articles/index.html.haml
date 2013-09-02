@@ -47,7 +47,7 @@
         end
       %tr{:class => [s,"data"], :id => article[:name]}
         %td{:style => "display: none"}= article[:name]
-        %td
+        %td{:class => "article_name"}
           = link_to article[:name], "https://devcenter.heroku.com/articles/#{article[:url]}", :class => "text-info"
           %span.text-muted
             (#{article["url"]})
@@ -106,6 +106,12 @@
   $('.compare').tooltip({
     title: "Compare the translated with the original",
     trigger: "hover"
+  });
+  $('.compare').click(function(){
+    $("#Modal h4").html($(this).parent().parent().find("td.article_name").html());
+    $("#doc").html("<img src='#{image_path("ajax-loader.gif")}' class='indicator' /><span class='text-muted center'>Original Article</span>");
+    $("#wiki").html("<img src='#{image_path("ajax-loader.gif")}' class='indicator' /><span class='text-muted center'>Translated Article</span>");
+    $('#Modal').modal('show');
   });
   $("#filter").on("keyup",function(){
     console.log($(this).val());

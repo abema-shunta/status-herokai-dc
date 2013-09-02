@@ -1,0 +1,15 @@
+try{
+<% if @wiki %>
+$("<%= raw turn_into_single_line(@wiki) %>").appendTo("#wiki");
+<% end %>
+var doc = $("<%= raw turn_into_single_line(@doc) %>")
+doc.find("section.article-feedback").remove();
+doc.find("#table-of-contents").remove();
+doc.find(".tags").remove();
+doc.find(".meta").remove();
+doc.appendTo("#doc");
+$("#Modal h4").text("<%= @article[:name] %>");
+$('#Modal').modal('show');
+}catch(e){
+  alert(e);
+}

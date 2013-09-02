@@ -15,3 +15,13 @@
 body{
   padding: 70px;
 }
+.modal-dialog {
+  width: auto;
+}
+#Articles td{
+  width: 50%;
+  vertical-align: top;
+}
+.center{
+  text-align: center;
+}

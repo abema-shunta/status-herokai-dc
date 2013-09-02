@@ -24,7 +24,8 @@
       %th Name
       %th Updated
       %th Translated
-      %th 
+      %th Diff 
+      %th
       %th
       %th
       %th
@@ -58,18 +59,31 @@
             Not yet
           - else        
             =article[:translated_at].strftime "%y/%m/%d"
+        %td= link_to "", compare_path(:url => article[:url]), :class => ["glyphicon", "glyphicon-eye-open"], :remote => true
         %td
           %span{:class => "glyphicon glyphicon-#{sign[s]} text-#{s}"}
         %td= link_to "", "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["glyphicon", "glyphicon-pencil"]
         %td= link_to "", "https://devcenter.heroku.com/articles/#{article[:url]}", :class => ["glyphicon", "glyphicon-new-window"]
         %td= link_to "", "https://twitter.com/share?text=#{tweet_text(article)}", :class => ["glyphicon", "glyphicon-bullhorn"], :target => "_blank"
 
+#Modal.modal.fade{:tabindex => "-1", :role => "dialog", "aria-labellebdy" => "myModalLabel", "aria-hidden" => "true"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"} &times; 
+        %h4.modal-title
+      .modal-body
+        %table#Articles
+          %tr
+            %td#doc
+            %td#wiki
+
 :javascript
   $("#filter").on("keyup",function(){
     console.log($(this).val());
     var keyword = $(this).val();
     if(keyword.length > 0){
-      $("table tr.data").each(function(){
+      $("table#data tr.data").each(function(){
         if($(this).attr("id").toLowerCase().indexOf(keyword.toLowerCase()) != -1){
           $(this).show();
         } else {
@@ -77,6 +91,6 @@
         }
       });
     }else{
-      $("table tr").show();
+      $("table#data tr").show();
     }
   })

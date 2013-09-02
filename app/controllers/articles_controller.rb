@@ -1,10 +1,28 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /articles
   # GET /articles.json
   def index
     @articles = Article.all
+  end
+
+  def compare
+    require 'rubygems'
+    require 'nokogiri'
+    require 'open-uri'
+    @article = Article.find_by(:url => params[:url] )
+    _doc = Nokogiri::HTML(open("https://devcenter.heroku.com/articles/#{params[:url]}"))
+    @doc = _doc.css(".padder").first.to_s
+    _wiki = Nokogiri::HTML(open("https://github.com/herokaijp/devcenter/wiki/#{params[:url]}"))
+    if _wiki.css("#head h1").first.content == "Home"
+      @wiki = nil
+    else
+      @wiki = _wiki.css("#wiki-content").first.to_s
+    end
+    respond_to do |format|
+      format.js
+    end
   end
 
   # # GET /articles/1

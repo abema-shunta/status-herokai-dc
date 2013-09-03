@@ -10,12 +10,18 @@
     :ruby 
       pages = @articles.size
       translated_pages = @articles.select{|a| a[:translated_at] != nil}.size
+      out_of_date_pages = @articles.select{|a| (a[:translated_at] != nil) && (a[:translated_at] < a[:written_at])}.size
+      ood_rate = out_of_date_pages * 100 / pages
       score = translated_pages * 100 / pages 
     %p
       = status_lead(pages, translated_pages)
-    .progress.progress-striped.active
-      .progress-bar{:role=>"progressbar", "aria-valuenow" => score, "aria-valuemin" => "0", "aria-valuemax" => "100", :style => "width: #{score}%"}
-        %span.sr-only #{score}% Complete
+    .progress
+      #bar_success.progress-bar.progress-bar-success{:style => "width: #{score - ood_rate}%"}
+        %span.sr-only #{score - ood_rate}% Complete
+      #bar_warning.progress-bar.progress-bar-warning{:style => "width: #{ood_rate}%"}
+        %span.sr-only #{ood_rate}% Complete
+      #bar_danger.progress-bar.progress-bar-danger{:style => "width: #{100 - score}%"}
+        %span.sr-only #{100 - score}% Complete
 
 %table#data.table.table-striped
   %thead
@@ -106,6 +112,21 @@
   $('.compare').tooltip({
     title: "#{t 'tooltip.compare'}",
     trigger: "hover"
+  });
+  $('#bar_success').tooltip({
+    title: "#{t 'tooltip.stat_success'} (#{score - ood_rate}%)",
+    trigger: "hover",
+    placement: "bottom"
+  });
+  $('#bar_warning').tooltip({
+    title: "#{t 'tooltip.stat_warning'} (#{ood_rate}%)",
+    trigger: "hover",
+    placement: "bottom"
+  });
+  $('#bar_danger').tooltip({
+    title: "#{t 'tooltip.stat_danger'} (#{100 - score}%)",
+    trigger: "hover",
+    placement: "bottom"
   });
   $('.compare').click(function(){
     $("#Modal h4").html($(this).parent().parent().find("td.article_name").html());

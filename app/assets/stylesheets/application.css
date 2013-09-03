@@ -39,3 +39,12 @@ body{
   text-align: center;
   display: block;
 }
+
+.navbar-brand{
+  font-family: 'Ubuntu', sans-serif;
+  letter-spacing: -0.1em;
+}
+.jumbotron h1{
+  font-family: 'Ubuntu', sans-serif;
+  letter-spacing: -0.1em;
+}

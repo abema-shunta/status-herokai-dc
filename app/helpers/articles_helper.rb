@@ -1,4 +1,5 @@
 module ArticlesHelper
+  
   def tweet_text(article)
     ret = "\
 #{article[:name]}を翻訳しました。 \
@@ -16,4 +17,15 @@ https://devcenter.heroku.com/articles/#{article[:url]} \
     string.gsub!("\"","\\\"")
     string
   end
+  
+  def status_lead(pages, translated_pages)
+    score = translated_pages * 100 / pages
+    if I18n.locale.to_s == "ja"
+      lead = "全部で記事が#{pages}ページあり、#{translated_pages}ページが翻訳済みです。 #{score}%が翻訳されています。"
+    else
+      lead = "There are #{pages} pages, and #{translated_pages} pages are translated. #{score}% translated."
+    end
+    lead
+  end
+  
 end

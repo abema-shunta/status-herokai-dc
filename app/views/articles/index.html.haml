@@ -10,10 +10,9 @@
     :ruby 
       pages = @articles.size
       translated_pages = @articles.select{|a| a[:translated_at] != nil}.size
-      score = translated_pages * 100 / pages
+      score = translated_pages * 100 / pages 
     %p
-      There are #{pages} pages, and #{translated_pages} pages are translated. #{score}% translated.
-      
+      = status_lead(pages, translated_pages)
     .progress.progress-striped.active
       .progress-bar{:role=>"progressbar", "aria-valuenow" => score, "aria-valuemin" => "0", "aria-valuemax" => "100", :style => "width: #{score}%"}
         %span.sr-only #{score}% Complete
@@ -23,9 +22,9 @@
     %tr
       %th{:style => "display:none"}
       %th 
-      %th Name
-      %th Updated
-      %th Translated
+      %th= t "thead.name"
+      %th= t "thead.updated"
+      %th= t "thead.translated"
       %th
       %th
       %th
@@ -55,11 +54,11 @@
           %span.text-muted
             (#{article["url"]})
           - if article[:translated_at]
-            = link_to "Japanese", "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["btn", "btn-default", "btn-xs"]
+            = link_to t("c.japanese"), "https://github.com/herokaijp/devcenter/wiki/#{article[:url]}", :class => ["btn", "btn-default", "btn-xs"]
         %td= article[:written_at].strftime "%y/%m/%d" if article[:written_at]
         %td
           - unless article[:translated_at]
-            Not yet
+            %span.text-muted= t "c.not_yet"  
           - else        
             =article[:translated_at].strftime "%y/%m/%d"
         %td= link_to "", compare_path(:url => article[:url]), :class => ["glyphicon", "glyphicon-eye-open", "compare"], :remote => true
@@ -81,37 +80,37 @@
 
 :javascript
   $('.wikilink').tooltip({
-    title: "Watch the translated article",
+    title: "#{t 'tooltip.wikilink'}",
     trigger: "hover"
   });
   $('.doclink').tooltip({
-    title: "Watch the original article",
+    title: "#{t 'tooltip.doclink'}",
     trigger: "hover"
   });
   $('.announce').tooltip({
-    title: "Announce this article via Twitter",
+    title: "#{t 'tooltip.announce'}",
     trigger: "hover"
   });
   $('.stat-success').tooltip({
-    title: "Translated after this article updated",
+    title: "#{t 'tooltip.stat_success'}",
     trigger: "hover"
   });
   $('.stat-warning').tooltip({
-    title: "This article might be out-of-date",
+    title: "#{t 'tooltip.stat_warning'}",
     trigger: "hover"
   });
   $('.stat-danger').tooltip({
-    title: "Untranslated",
+    title: "#{t 'tooltip.stat_danger'}",
     trigger: "hover"
   });
   $('.compare').tooltip({
-    title: "Compare the translated with the original",
+    title: "#{t 'tooltip.compare'}",
     trigger: "hover"
   });
   $('.compare').click(function(){
     $("#Modal h4").html($(this).parent().parent().find("td.article_name").html());
-    $("#doc").html("<img src='#{image_path("ajax-loader.gif")}' class='indicator' /><span class='text-muted center'>Original Article</span>");
-    $("#wiki").html("<img src='#{image_path("ajax-loader.gif")}' class='indicator' /><span class='text-muted center'>Translated Article</span>");
+    $("#doc").html("<img src='#{image_path("ajax-loader.gif")}' class='indicator' /><span class='text-muted center'>#{t 'c.original_article'}</span>");
+    $("#wiki").html("<img src='#{image_path("ajax-loader.gif")}' class='indicator' /><span class='text-muted center'>#{t 'c.translated_article'}</span>");
     $('#Modal').modal('show');
   });
   $("#filter").on("keyup",function(){

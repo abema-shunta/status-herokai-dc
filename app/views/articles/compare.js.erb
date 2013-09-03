@@ -2,7 +2,7 @@ try{
 <% if @wiki %>
 $("#wiki").html($("<%= raw turn_into_single_line(@wiki) %>"));
 <% else %>
-$("#wiki").html($("<span class='text-muted center'>This article is not translated yet.</span>"));
+$("#wiki").html($("<span class='text-muted center'><%= t 'c.not_yet_long' %></span>"));
 <% end %>
 var doc = $("<%= raw turn_into_single_line(@doc) %>")
 doc.find("section.article-feedback").remove();

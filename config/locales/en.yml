@@ -20,4 +20,21 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  thead: 
+    name: "Name"
+    updated: "Updated"
+    translated: "Translated"
+  tooltip: 
+    wikilink: "Watch the translated article"
+    doclink: "Watch the original article"
+    announce: "Announce this article via Twitter"
+    stat_success: "Translated after this article updated"
+    stat_warning: "This article might be out-of-date"
+    stat_danger:  "Untranslated"
+    compare: "Compare the translated with the original"
+  c:
+    japanese: "Japanese"
+    original_article: "Original Article"
+    translated_article: "Translated Article"
+    not_yet: "Not yet"
+    not_yet_long: "This article is not translated yet."

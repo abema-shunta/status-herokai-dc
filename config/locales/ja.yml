@@ -1,0 +1,43 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ja:
+  thead: 
+    name: "記事名"
+    updated: "元更新日"
+    translated: "翻訳日"
+  tooltip: 
+    wikilink: "翻訳された記事を見る"
+    doclink: "オリジナルの記事を見る"
+    announce: "Twitter経由で記事を告知する"
+    stat_success: "元記事の更新後に翻訳されています。"
+    stat_warning: "翻訳が古くなっているかもしれません。"
+    stat_danger:  "まだ翻訳できていません。"
+    compare: "元記事と翻訳記事を比較して見る"
+  c:
+    japanese: "日本語訳"
+    original_article: "オリジナル記事"
+    translated_article: "翻訳記事"
+    not_yet: "未翻訳"
+    not_yet_long: "この記事はまだ翻訳されていません。"
+    
+  
+    

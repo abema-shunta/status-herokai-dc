@@ -15,7 +15,7 @@
       score = translated_pages * 100 / pages 
     %p
       = status_lead(pages, translated_pages)
-    .progress
+    .progress.progress-striped
       #bar_success.progress-bar.progress-bar-success{:style => "width: #{score - ood_rate}%"}
         %span.sr-only #{score - ood_rate}% Complete
       #bar_warning.progress-bar.progress-bar-warning{:style => "width: #{ood_rate}%"}
@@ -85,6 +85,10 @@
             %td#wiki
 
 :javascript
+
+  var state_filter = ""
+  var state_list = ["",".success",".warning",".danger"];
+  
   $('.wikilink').tooltip({
     title: "#{t 'tooltip.wikilink'}",
     trigger: "hover"
@@ -128,17 +132,41 @@
     trigger: "hover",
     placement: "bottom"
   });
+
+  function invoke_state_filter(num){
+    if(state_filter == state_list[num]) {
+      state_filter = state_list[0];
+    } else {
+      state_filter = state_list[num];
+    }
+    change_bar_state();
+    $("#filter").keyup();
+  }
+  
+  function change_bar_state(){
+    if(state_filter == state_list[0]) {
+      $(".progress-bar").show();
+    } else {
+      $(".progress-bar").hide()
+      $(".progress-bar-"+state_filter.substring(1)).show();
+    }
+  }
+
+  $('#bar_success').click( function(){ invoke_state_filter(1) });
+  $('#bar_warning').click( function(){ invoke_state_filter(2) });
+  $('#bar_danger').click(  function(){ invoke_state_filter(3) });
+
   $('.compare').click(function(){
     $("#Modal h4").html($(this).parent().parent().find("td.article_name").html());
     $("#doc").html("<img src='#{image_path("ajax-loader.gif")}' class='indicator' /><span class='text-muted center'>#{t 'c.original_article'}</span>");
     $("#wiki").html("<img src='#{image_path("ajax-loader.gif")}' class='indicator' /><span class='text-muted center'>#{t 'c.translated_article'}</span>");
     $('#Modal').modal('show');
   });
-  $("#filter").on("keyup",function(){
-    console.log($(this).val());
-    var keyword = $(this).val();
+  
+  function apply_filter(keyword){
     if(keyword.length > 0){
-      $("table#data tr.data").each(function(){
+      $("table#data tr.data").hide();
+      $("table#data tr.data"+state_filter).each(function(){
         if($(this).attr("id").toLowerCase().indexOf(keyword.toLowerCase()) != -1){
           $(this).show();
         } else {
@@ -146,6 +174,13 @@
         }
       });
     }else{
-      $("table#data tr").show();
+      $("table#data tr.data").hide();
+      $("table#data tr.data"+state_filter).show();
     }
+  }
+  
+  $("#filter").on("keyup",function(){
+    console.log($(this).val());
+    var keyword = $(this).val();
+    apply_filter(keyword);
   })

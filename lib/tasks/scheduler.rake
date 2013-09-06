@@ -82,7 +82,7 @@ task :update_status_from_github_wiki => :environment do
 
 end
 
-desc ""
+desc "This task is called by the Heroku scheduler add-on"
 task :update_history => :environment do
 
   articles = Article.all

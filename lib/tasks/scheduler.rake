@@ -78,4 +78,21 @@ task :update_status_from_github_wiki => :environment do
 
   end
 
+  Rake::Task["update_history"].invoke
+
 end
+
+desc ""
+task :update_history => :environment do
+
+  articles = Article.all
+  history = History.new
+  
+  history.articles_count = @articles.size
+  history.translated_count = @articles.select{|a| a[:translated_at] != nil}.size
+  history.ood_count = @articles.select{|a| (a[:translated_at] != nil) && (a[:translated_at] < a[:written_at])}.size
+
+  history.save
+  
+end
+

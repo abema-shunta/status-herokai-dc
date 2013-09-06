@@ -24,6 +24,13 @@ class ArticlesController < ApplicationController
       format.js
     end
   end
+  
+  def history
+    @histories = History.order("created_at asc")
+    respond_to do |format|
+      format.js
+    end
+  end
 
   # # GET /articles/1
   # # GET /articles/1.json

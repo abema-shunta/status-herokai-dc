@@ -8,6 +8,7 @@ StatusHerokaiDc::Application.routes.draw do
   root 'articles#index'
   
   get 'article/:url' => 'articles#compare', as: :compare
+  get 'history' => 'articles#history', as: :history
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

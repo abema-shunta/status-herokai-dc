@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  translated_count: 
+  ood_count: 
+  articles_count: 1
+
+two:
+  translated_count: 
+  ood_count: 
+  articles_count: 1

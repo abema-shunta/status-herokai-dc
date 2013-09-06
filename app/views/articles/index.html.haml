@@ -3,6 +3,8 @@
   .navbar-form.pull-right
     .form-group
       %input#filter{:type => "text", :class => "form-control", :placeholder => "Search"}
+  .navbar-text.pull-right
+    = link_to " History", history_path(), {:class => ["glyphicon", "glyphicon-book", "navbar-link"], :id => "history_link", :remote => true}
 
 .jumbotron
   .container
@@ -83,6 +85,15 @@
           %tr
             %td#doc
             %td#wiki
+
+#History.modal.fade{:tabindex => "-1", :role => "dialog", "aria-labellebdy" => "myModalLabel", "aria-hidden" => "true"}
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"} &times; 
+        %h4.modal-title History
+      .modal-body
+        #History_container
 
 :javascript
 
@@ -204,3 +215,4 @@
     var keyword = $(this).val();
     apply_filter(keyword);
   })
+    

@@ -38,6 +38,13 @@ ja:
     translated_article: "翻訳記事"
     not_yet: "未翻訳"
     not_yet_long: "この記事はまだ翻訳されていません。"
-    
+    filter: "記事の絞込み(ex: ruby)"
+  h: 
+    history: "履歴"
+    title: "翻訳実績履歴"
+    yaxis: "ページ数"
+    untranslated: "未翻訳"
+    old: "要確認"
+    fresh: "翻訳済"
   
     

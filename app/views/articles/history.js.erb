@@ -6,7 +6,7 @@ $('#History_container').highcharts({
             type: 'area'
         },
         title: {
-            text: 'Status Herokai History'
+            text: '<%= t "h.title" %>'
         },
         subtitle: {
             text: ''
@@ -20,7 +20,7 @@ $('#History_container').highcharts({
         },
         yAxis: {
             title: {
-                text: 'Pages'
+                text: '<%= t "h.yaxis" %>'
             },
             labels: {
                 
@@ -42,15 +42,15 @@ $('#History_container').highcharts({
             }
         },
         series: [{
-            name: 'Untranslated',
+            name: '<%= t "h.untranslated" %>',
             color: '#CC0000',
             data: [<%= raw @histories.map{|hs| hs.untransrated_count}.join(",") %>]
         }, {
-            name: 'Translated but old',
+            name: '<%= t "h.old" %>',
             color: '#EEBB00',
             data: [<%= raw @histories.map{|hs| hs.ood_count}.join(",") %>]
         }, {
-            name: 'Translated',
+            name: '<%= t "h.fresh" %>',
             color: '#00AA00',
             data: [<%= raw @histories.map{|hs| hs.fresh_count}.join(",") %>]
         }]

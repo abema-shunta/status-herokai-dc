@@ -2,9 +2,9 @@
   %a.navbar-brand{:href => "#"} Status HerokaiJP DevCenter
   .navbar-form.pull-right
     .form-group
-      %input#filter{:type => "text", :class => "form-control", :placeholder => "Search"}
+      %input#filter{:type => "text", :class => "form-control", :placeholder => "#{t "c.filter"}"}
   .navbar-text.pull-right
-    = link_to " History", history_path(), {:class => ["glyphicon", "glyphicon-book", "navbar-link"], :id => "history_link", :remote => true}
+    = link_to " #{t "h.history"}", history_path(:locale => params[:locale]), {:class => ["glyphicon", "glyphicon-book", "navbar-link"], :id => "history_link", :remote => true}
 
 .jumbotron
   .container
@@ -91,7 +91,7 @@
     .modal-content
       .modal-header
         %button.close{"data-dismiss" => "modal", "aria-hidden" => "true"} &times; 
-        %h4.modal-title History
+        %h4.modal-title #{t "h.history"}
       .modal-body
         #History_container
 

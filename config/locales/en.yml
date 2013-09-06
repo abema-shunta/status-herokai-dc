@@ -38,3 +38,11 @@ en:
     translated_article: "Translated Article"
     not_yet: "Not yet"
     not_yet_long: "This article is not translated yet."
+    filter: "Filter articles (e.g. ruby)"
+  h: 
+    history: "History"
+    title: "Translation history"
+    yaxis: "Pages"
+    untranslated: "Untranslated"
+    old: "Translated but old"
+    fresh: "Translated"

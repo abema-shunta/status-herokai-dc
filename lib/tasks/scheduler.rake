@@ -88,9 +88,9 @@ task :update_history => :environment do
   articles = Article.all
   history = History.new
   
-  history.articles_count = @articles.size
-  history.translated_count = @articles.select{|a| a[:translated_at] != nil}.size
-  history.ood_count = @articles.select{|a| (a[:translated_at] != nil) && (a[:translated_at] < a[:written_at])}.size
+  history.articles_count = articles.size
+  history.translated_count = articles.select{|a| a[:translated_at] != nil}.size
+  history.ood_count = articles.select{|a| (a[:translated_at] != nil) && (a[:translated_at] < a[:written_at])}.size
 
   history.save
   

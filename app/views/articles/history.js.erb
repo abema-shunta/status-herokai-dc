@@ -1,61 +1,64 @@
-try{
-$("#History").modal('show');
+<% if @histories %>
 
-$('#History_container').highcharts({
-        chart: {
-            type: 'area'
-        },
-        title: {
-            text: '<%= t "h.title" %>'
-        },
-        subtitle: {
-            text: ''
-        },
-        xAxis: {
-            categories: [<%= raw @histories.map{|hs| hs.created_at.strftime("'%m/%d'")}.join(",") %>],
-            tickmarkPlacement: 'on',
-            title: {
-                enabled: false
-            }
-        },
-        yAxis: {
-            title: {
-                text: '<%= t "h.yaxis" %>'
-            },
-            labels: {
-                
-            }
-        },
-        tooltip: {
-            shared: true,
-            pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.0f} P)<br/>',
-        },
-        plotOptions: {
-            area: {
-                stacking: 'normal',
-                lineColor: '#666666',
-                lineWidth: 1,
-                marker: {
-                    lineWidth: 1,
-                    lineColor: '#666666'
-                }
-            }
-        },
-        series: [{
-            name: '<%= t "h.untranslated" %>',
-            color: '#CC0000',
-            data: [<%= raw @histories.map{|hs| hs.untransrated_count}.join(",") %>]
-        }, {
-            name: '<%= t "h.old" %>',
-            color: '#EEBB00',
-            data: [<%= raw @histories.map{|hs| hs.ood_count}.join(",") %>]
-        }, {
-            name: '<%= t "h.fresh" %>',
-            color: '#00AA00',
-            data: [<%= raw @histories.map{|hs| hs.fresh_count}.join(",") %>]
-        }]
-    });
-    
-}catch(e){
-  alert(e);
-}
+  $("#History").modal('show');
+
+  $('#History_container').highcharts({
+      chart: {
+          type: 'area'
+      },
+      title: {
+          text: '<%= t "h.title" %>'
+      },
+      subtitle: {
+          text: ''
+      },
+      xAxis: {
+          categories: [<%= raw @histories.map{|hs| hs.created_at.strftime("'%m/%d'")}.join(",") %>],
+          tickmarkPlacement: 'on',
+          title: {
+              enabled: false
+          }
+      },
+      yAxis: {
+          title: {
+              text: '<%= t "h.yaxis" %>'
+          },
+          labels: {
+            
+          }
+      },
+      tooltip: {
+          shared: true,
+          pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.0f} P)<br/>',
+      },
+      plotOptions: {
+          area: {
+              stacking: 'normal',
+              lineColor: '#666666',
+              lineWidth: 1,
+              marker: {
+                  lineWidth: 1,
+                  lineColor: '#666666'
+              }
+          }
+      },
+      series: [{
+          name: '<%= t "h.untranslated" %>',
+          color: '#CC0000',
+          data: [<%= raw @histories.map{|hs| hs.untransrated_count}.join(",") %>]
+      }, {
+          name: '<%= t "h.old" %>',
+          color: '#EEBB00',
+          data: [<%= raw @histories.map{|hs| hs.ood_count}.join(",") %>]
+      }, {
+          name: '<%= t "h.fresh" %>',
+          color: '#00AA00',
+          data: [<%= raw @histories.map{|hs| hs.fresh_count}.join(",") %>]
+      }]
+  });
+
+<% else %>
+  
+  alert('<%= t "h.yet" %>');
+  
+<% end %>

@@ -215,4 +215,35 @@
     var keyword = $(this).val();
     apply_filter(keyword);
   })
+  
+  String.prototype.replaceAll = function (org, dest){  
+    return this.split(org).join(dest);  
+  }
+  
+  $.tablesorter.addParser({ 
+    id: 'date', 
+    is: function(s) { 
+        return false; 
+    }, 
+    format: function(s) { 
+        s = s.replaceAll(" ","").replaceAll("\n","");
+        var a = Date.parse("20"+s); if(isNaN(a))a=0;
+        console.log(a);
+        return a; 
+    }, 
+    type: 'numeric' 
+  });
+  
+  $("#data").tablesorter({
+    debug: false,
+    headers: {
+      1:{sorter:false},
+      3:{sorter:'date'},
+      4:{sorter:'date'},
+      5:{sorter:false},
+      6:{sorter:false},
+      7:{sorter:false},
+      8:{sorter:false}
+    }
+  });
     

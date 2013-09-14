@@ -227,7 +227,7 @@
     }, 
     format: function(s) { 
         s = s.replaceAll(" ","").replaceAll("\n","");
-        var a = Date.parse("20"+s); if(isNaN(a))a=0;
+        var a = Date.parse("20"+s) * -1; if(isNaN(a))a=0;
         console.log(a);
         return a; 
     }, 

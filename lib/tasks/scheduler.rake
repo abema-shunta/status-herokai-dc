@@ -70,11 +70,8 @@ task :update_status_from_github_wiki => :environment do
 
     _html = Nokogiri::HTML(open("#{HEROKAI_WIKI_URL}/#{article[:url]}"))
     puts "#{HEROKAI_WIKI_URL}/#{article[:url]}"
-    if _html.css("#head h1").first.content == "Home" # appearing editor for creating new article
-      article[:translated_at] = nil
-    else
-      article[:translated_at] = Date.parse(_html.css("#last-edit time").first['title'])
-    end
+    puts _html.css(".gh-header-meta time").first['title']
+    article[:translated_at] = Date.parse(_html.css("#last-edit time").first['title']) rescue nil
     article.save
 
   end

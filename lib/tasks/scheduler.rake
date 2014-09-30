@@ -8,7 +8,8 @@ HEROKU_ARTICLES_URL = "#{HEROKU_URL}/articles"
 HEROKAI_WIKI_URL = "https://github.com/herokaijp/devcenter/wiki"
 
 desc "This task is called by the Heroku scheduler add-on"
-task :update_status_from_heroku_devcenter => :environment do 
+task :update_status_from_heroku_devcenter, [:max_index_page_size] => :environment do |t, args|
+  max_index_page_size = (args.max_index_page_size.presence || 1).to_i
 
   puts "Updating status..."
 
@@ -22,7 +23,7 @@ task :update_status_from_heroku_devcenter => :environment do
     puts "page #{page}"
     _articles = Nokogiri::HTML(open("#{HEROKU_ARTICLES_URL}?page=#{page}"))
     list = _articles.css("ul.long-doc-listing li a")
-    if list.size > 0
+    if page < max_index_page_size && list.size > 0
       list.each do |name|
         articles << {:url => name['href'].split("/").last.to_s, :category => "", :tag => "" }
       end
@@ -69,11 +70,8 @@ task :update_status_from_github_wiki => :environment do
 
     _html = Nokogiri::HTML(open("#{HEROKAI_WIKI_URL}/#{article[:url]}"))
     puts "#{HEROKAI_WIKI_URL}/#{article[:url]}"
-    if _html.css("#head h1").first.content == "Home" # appearing editor for creating new article
-      article[:translated_at] = nil
-    else
-      article[:translated_at] = Date.parse(_html.css("#last-edit time").first['title'])
-    end
+    puts _html.css(".gh-header-meta time").first['title']
+    article[:translated_at] = Date.parse(_html.css("#last-edit time").first['title']) rescue nil
     article.save
 
   end
